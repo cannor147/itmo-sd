@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductDao {
+public class ProductDao extends AbstractDao {
     public void createTable() throws SQLException {
         executeUpdate("CREATE TABLE IF NOT EXISTS PRODUCT" +
                 "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
@@ -64,23 +64,5 @@ public class ProductDao {
     public void insert(Product product) throws SQLException {
         executeUpdate("INSERT INTO PRODUCT" +
                 "(NAME, PRICE) VALUES (\"" + product.getName() + "\"," + product.getPrice() + ")");
-    }
-
-    private ResultSet executeQuery(String query) throws SQLException {
-        ResultSet resultSet;
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-            Statement statement = c.createStatement();
-            resultSet = statement.executeQuery(query);
-            statement.close();
-        }
-        return resultSet;
-    }
-
-    private void executeUpdate(String query) throws SQLException {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-            Statement statement = c.createStatement();
-            statement.executeQuery(query);
-            statement.close();
-        }
     }
 }
