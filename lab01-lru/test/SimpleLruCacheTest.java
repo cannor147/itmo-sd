@@ -4,14 +4,14 @@ import org.junit.Test;
 public class SimpleLruCacheTest {
     @Test
     public void testNull() {
-        LruCache<Integer, String> lruCache = new SimpleLruCache<>(4);
+        final LruCache<Integer, String> lruCache = new SimpleLruCache<>(4);
         Assert.assertEquals(0, lruCache.size());
         Assert.assertNull(lruCache.get(10));
     }
 
     @Test
     public void testOnly() {
-        LruCache<Integer, String> lruCache = new SimpleLruCache<>(1);
+        final LruCache<Integer, String> lruCache = new SimpleLruCache<>(1);
         lruCache.put(1, "one");
         lruCache.put(2, "one else");
         Assert.assertEquals(1, lruCache.size());
@@ -20,7 +20,7 @@ public class SimpleLruCacheTest {
 
     @Test
     public void testLimit() {
-        LruCache<Integer, String> lruCache = new SimpleLruCache<>(4);
+        final LruCache<Integer, String> lruCache = new SimpleLruCache<>(4);
         lruCache.put(1, "a");
         lruCache.put(2, "b");
         lruCache.put(3, "c");
@@ -33,7 +33,7 @@ public class SimpleLruCacheTest {
 
     @Test
     public void testUpdate() {
-        LruCache<Integer, String> lruCache = new SimpleLruCache<>(2);
+        final LruCache<Integer, String> lruCache = new SimpleLruCache<>(2);
         lruCache.put(1, "a");
         lruCache.put(2, "b");
         lruCache.get(1);
@@ -43,7 +43,7 @@ public class SimpleLruCacheTest {
 
     @Test
     public void testChangeCapacity() {
-        LruCache<Integer, String> lruCache = new SimpleLruCache<>(2);
+        final LruCache<Integer, String> lruCache = new SimpleLruCache<>(2);
         lruCache.put(1, "a");
         lruCache.put(2, "b");
         lruCache.put(3, "c");
@@ -56,7 +56,7 @@ public class SimpleLruCacheTest {
 
     @Test
     public void testChange() {
-        LruCache<Integer, String> lruCache = new SimpleLruCache<>(2);
+        final LruCache<Integer, String> lruCache = new SimpleLruCache<>(2);
         lruCache.put(1, "a");
         lruCache.put(2, "b");
         lruCache.put(1, "русский текст");

@@ -7,9 +7,9 @@ public abstract class AbstractLruCache<K, V> implements LruCache<K, V> {
     }
 
     @Override
-    public V get(K key) {
+    public V get(final K key) {
         assert key != null;
-        V result = internalGet(key);
+        final V result = internalGet(key);
         internalAssert();
         return result;
     }
@@ -19,9 +19,9 @@ public abstract class AbstractLruCache<K, V> implements LruCache<K, V> {
         assert key != null;
         assert value != null;
 
-        int startSize = size();
+        final int startSize = size();
         internalPut(key, value);
-        int endSize = size();
+        final int endSize = size();
 
         assert get(key) == value;
         assert startSize + 1 == endSize || endSize == capacity;
@@ -30,7 +30,7 @@ public abstract class AbstractLruCache<K, V> implements LruCache<K, V> {
 
     @Override
     public int size() {
-        int size = internalSize();
+        final int size = internalSize();
 
         assert size <= capacity;
         internalAssert();

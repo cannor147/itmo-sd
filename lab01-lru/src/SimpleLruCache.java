@@ -57,7 +57,7 @@ public class SimpleLruCache<K, V> extends AbstractLruCache<K, V> {
     }
 
     private void update(K key) {
-        Node<K, V> node = cacheStorage.get(key);
+        final Node<K, V> node = cacheStorage.get(key);
         if (node == null || node == head) {
             return;
         }
@@ -75,7 +75,7 @@ public class SimpleLruCache<K, V> extends AbstractLruCache<K, V> {
     }
 
     private void insert(K key, V value) {
-        Node<K, V> node = new Node<>(key, value, null, head);
+        final Node<K, V> node = new Node<>(key, value, null, head);
         if (tail == null) {
             tail = node;
         } else {
