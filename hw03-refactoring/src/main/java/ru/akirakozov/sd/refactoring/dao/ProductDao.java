@@ -8,13 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductDao extends AbstractDao<Product> {
-    public void createTable() throws SQLException {
-        executeUpdate("CREATE TABLE IF NOT EXISTS PRODUCT" +
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                " NAME           TEXT    NOT NULL, " +
-                " PRICE          INT     NOT NULL)");
-    }
-
     public List<Product> findAll() throws SQLException {
         return select("*", "");
     }
@@ -42,6 +35,15 @@ public class ProductDao extends AbstractDao<Product> {
     @Override
     protected String getName() {
         return "product";
+    }
+
+    @Override
+    protected List<String> getFieldDescriptions() {
+        return List.of(
+                "id integer primary key autoincrement not null",
+                "name text not null",
+                "price int not null"
+        );
     }
 
     @Override

@@ -24,6 +24,11 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    public void createTable() throws SQLException {
+        final String fields = String.join(", ", getFieldDescriptions());
+        executeUpdate(String.format("create table if not exists %s (%s)", getName(), fields));
+    }
+
     protected List<T> select(String target, String condition) throws SQLException {
         final ResultSet resultSet = executeQuery(String.format("select %s from %s %s", target, getName(), condition));
         final List<T> products = new ArrayList<>();
@@ -59,5 +64,6 @@ public abstract class AbstractDao<T> {
     }
 
     protected abstract String getName();
+    protected abstract List<String> getFieldDescriptions();
     protected abstract T transform(ResultSet resultSet);
 }
