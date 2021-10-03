@@ -25,32 +25,26 @@ public class QueryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String command = request.getParameter("command");
 
-        if ("max".equals(command)) {
-            try {
-                htmlPrinter.printProduct(response, "Product with max price", productDao.findMax());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        try {
+            switch (command) {
+                case "max":
+                    htmlPrinter.printProduct(response, "Product with max price", productDao.findMax());
+                    break;
+                case "min":
+                    htmlPrinter.printProduct(response, "Product with min price", productDao.findMin());
+                    break;
+                case "sum":
+                    htmlPrinter.printPage(response, "Summary price: " + productDao.sumPrices());
+                    break;
+                case "count":
+                    htmlPrinter.printPage(response, "Number of products: " + productDao.count());
+                    break;
+                default:
+                    response.getWriter().println("Unknown command: " + command);
+                    break;
             }
-        } else if ("min".equals(command)) {
-            try {
-                htmlPrinter.printProduct(response, "Product with min price", productDao.findMin());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("sum".equals(command)) {
-            try {
-                htmlPrinter.printPage(response, "Summary price: " + productDao.sumPrices());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("count".equals(command)) {
-            try {
-                htmlPrinter.printPage(response, "Number of products: " + productDao.count());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            response.getWriter().println("Unknown command: " + command);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         response.setContentType("text/html");
