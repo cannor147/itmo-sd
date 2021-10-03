@@ -59,7 +59,7 @@ public abstract class AbstractDao<T> {
                 .collect(Collectors.joining(", "));
         final StringBuilder queryBuilder = new StringBuilder("insert into ").append(getName());
         queryBuilder.append(" (").append(String.join(", ", fieldNames)).append(") ");
-        queryBuilder.append("VALUES (").append(arguments).append(")");
+        queryBuilder.append("values (").append(arguments).append(")");
         executeUpdate(arguments);
     }
 
