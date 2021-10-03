@@ -9,7 +9,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HtmlPrinter {
-    private void printSafely(HttpServletResponse response, String text) {
+    private final HttpServletResponse response;
+
+    public HtmlPrinter(HttpServletResponse response) {
+        this.response = response;
+    }
+
+    public void printText(String text) {
         try {
             response.getWriter().println(text);
         } catch (IOException e) {
@@ -18,15 +24,15 @@ public class HtmlPrinter {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void printProduct(HttpServletResponse response, String title, Optional<Product> product) {
-        printPage(response, String.format("<h1>%s: </h1>%s", title, product.map(x -> x + "</br>").orElse("")));
+    public void printProduct(String title, Optional<Product> product) {
+        printPage(String.format("<h1>%s: </h1>%s", title, product.map(x -> x + "</br>").orElse("")));
     }
 
-    public void printProducts(HttpServletResponse response, List<Product> product) {
-        printPage(response, product.stream().map(x -> x.toString() + "</br>").collect(Collectors.joining()));
+    public void printProducts(List<Product> product) {
+        printPage(product.stream().map(x -> x.toString() + "</br>").collect(Collectors.joining()));
     }
 
-    public void printPage(HttpServletResponse response, String content) {
-        printSafely(response, String.format("<html><body>%s</body></html>", content));
+    public void printPage(String content) {
+        printText(String.format("<html><body>%s</body></html>", content));
     }
 }
