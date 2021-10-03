@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SameParameterValue")
 public abstract class AbstractDao<T> {
+    public static final String SQLITE_TEST_DB = "jdbc:sqlite:test.db";
+
     protected ResultSet executeQuery(String query) throws SQLException {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+        try (Connection c = DriverManager.getConnection(SQLITE_TEST_DB)) {
             try (Statement statement = c.createStatement()) {
                 return statement.executeQuery(query);
             }
@@ -18,7 +20,7 @@ public abstract class AbstractDao<T> {
     }
 
     protected void executeUpdate(String query) throws SQLException {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+        try (Connection c = DriverManager.getConnection(SQLITE_TEST_DB)) {
             try (Statement statement = c.createStatement()) {
                 statement.executeQuery(query);
             }
