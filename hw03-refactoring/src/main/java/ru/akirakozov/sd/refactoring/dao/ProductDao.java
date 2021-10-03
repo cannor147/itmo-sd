@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductDao extends AbstractDao {
+public class ProductDao extends AbstractDao<Product> {
     public void createTable() throws SQLException {
         executeUpdate("CREATE TABLE IF NOT EXISTS PRODUCT" +
                 "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
@@ -16,53 +16,39 @@ public class ProductDao extends AbstractDao {
     }
 
     public List<Product> findAll() throws SQLException {
-        ResultSet rs = executeQuery("SELECT * FROM PRODUCT");
-        List<Product> products = new ArrayList<>();
-        while (rs.next()) {
-            Product product = new Product();
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getInt("price"));
-            products.add(product);
-        }
-        return products;
+        return select("SELECT * FROM PRODUCT");
     }
 
     public Optional<Product> findMax() throws SQLException {
-        ResultSet rs = executeQuery("SELECT * FROM PRODUCT ORDER BY PRICE DESC LIMIT 1");
-        if (rs.next()) {
-            Product product = new Product();
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getInt("price"));
-            return Optional.of(product);
-        } else {
-            return Optional.empty();
-        }
+        return selectOnly("SELECT * FROM PRODUCT ORDER BY PRICE DESC LIMIT 1");
     }
 
     public Optional<Product> findMin() throws SQLException {
-        ResultSet rs = executeQuery("SELECT * FROM PRODUCT ORDER BY PRICE LIMIT 1");
-        if (rs.next()) {
-            Product product = new Product();
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getInt("price"));
-            return Optional.of(product);
-        } else {
-            return Optional.empty();
-        }
+        return selectOnly("SELECT * FROM PRODUCT ORDER BY PRICE LIMIT 1");
     }
 
     public int sumPrices() throws SQLException {
-        ResultSet rs = executeQuery("SELECT SUM(price) FROM PRODUCT");
-        return rs.next() ? 0 : rs.getInt(1);
+        return selectInt("SELECT SUM(price) FROM PRODUCT");
     }
 
     public int count() throws SQLException {
-        ResultSet rs = executeQuery("SELECT COUNT(*) FROM PRODUCT");
-        return rs.next() ? 0 : rs.getInt(1);
+        return selectInt("SELECT COUNT(*) FROM PRODUCT");
     }
 
     public void insert(Product product) throws SQLException {
         executeUpdate("INSERT INTO PRODUCT" +
                 "(NAME, PRICE) VALUES (\"" + product.getName() + "\"," + product.getPrice() + ")");
+    }
+
+    @Override
+    protected Product transform(ResultSet resultSet) {
+        try {
+            final Product product = new Product();
+            product.setName(resultSet.getString("name"));
+            product.setPrice(resultSet.getInt("price"));
+            return product;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }
