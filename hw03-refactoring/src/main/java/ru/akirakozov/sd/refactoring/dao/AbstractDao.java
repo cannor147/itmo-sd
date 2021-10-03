@@ -24,8 +24,8 @@ public abstract class AbstractDao<T> {
         }
     }
 
-    protected List<T> select(String query) throws SQLException {
-        final ResultSet resultSet = executeQuery(query);
+    protected List<T> select(String target, String condition) throws SQLException {
+        final ResultSet resultSet = executeQuery(String.format("select %s from %s %s", target, getName(), condition));
         final List<T> products = new ArrayList<>();
         while (resultSet.next()) {
             products.add(transform(resultSet));
@@ -33,13 +33,13 @@ public abstract class AbstractDao<T> {
         return products;
     }
 
-    protected Optional<T> selectOnly(String query) throws SQLException {
-        final ResultSet resultSet = executeQuery(query);
+    protected Optional<T> selectOnly(String target, String condition) throws SQLException {
+        final ResultSet resultSet = executeQuery(String.format("select %s from %s %s", target, getName(), condition));
         return resultSet.next() ? Optional.of(resultSet).map(this::transform) : Optional.empty();
     }
 
-    protected int selectInt(String query) throws SQLException {
-        final ResultSet resultSet = executeQuery(query);
+    protected int selectInt(String target, String condition) throws SQLException {
+        final ResultSet resultSet = executeQuery(String.format("select %s from %s %s", target, getName(), condition));
         return resultSet.next() ? resultSet.getInt(1) : 0;
     }
 

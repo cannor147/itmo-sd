@@ -16,23 +16,23 @@ public class ProductDao extends AbstractDao<Product> {
     }
 
     public List<Product> findAll() throws SQLException {
-        return select("SELECT * FROM PRODUCT");
+        return select("*", "");
     }
 
     public Optional<Product> findMax() throws SQLException {
-        return selectOnly("SELECT * FROM PRODUCT ORDER BY PRICE DESC LIMIT 1");
+        return selectOnly("*", "order by price desc limit 1");
     }
 
     public Optional<Product> findMin() throws SQLException {
-        return selectOnly("SELECT * FROM PRODUCT ORDER BY PRICE LIMIT 1");
+        return selectOnly("*", "order by price limit 1");
     }
 
     public int sumPrices() throws SQLException {
-        return selectInt("SELECT SUM(price) FROM PRODUCT");
+        return selectInt("sum(price)", "");
     }
 
     public int count() throws SQLException {
-        return selectInt("SELECT COUNT(*) FROM PRODUCT");
+        return selectInt("count(*)", "");
     }
 
     public void insert(Product product) throws SQLException {
