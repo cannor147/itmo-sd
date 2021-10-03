@@ -36,8 +36,12 @@ public class ProductDao extends AbstractDao<Product> {
     }
 
     public void insert(Product product) throws SQLException {
-        executeUpdate("INSERT INTO PRODUCT" +
-                "(NAME, PRICE) VALUES (\"" + product.getName() + "\"," + product.getPrice() + ")");
+        insert(List.of("name", "price"), product.getName(), product.getPrice());
+    }
+
+    @Override
+    protected String getName() {
+        return "product";
     }
 
     @Override
