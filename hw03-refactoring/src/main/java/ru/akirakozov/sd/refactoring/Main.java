@@ -12,21 +12,26 @@ import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
  * @author akirakozov
  */
 public class Main {
+    private static ProductDao productDao;
+
     public static void main(String[] args) throws Exception {
-        ProductDao productDao = new ProductDao();
+        productDao = new ProductDao();
         productDao.createTable();
 
-        Server server = new Server(8081);
-
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
-        server.setHandler(context);
-
-        context.addServlet(new ServletHolder(new AddProductServlet(productDao)), "/add-product");
-        context.addServlet(new ServletHolder(new GetProductsServlet(productDao)), "/get-products");
-        context.addServlet(new ServletHolder(new QueryServlet(productDao)), "/query");
-
+        final Server server = new Server(8081);
+        server.setHandler(createHandler());
         server.start();
         server.join();
+    }
+
+    private static ServletContextHandler createHandler() {
+        final ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        contextHandler.setContextPath("/");
+
+        contextHandler.addServlet(new ServletHolder(new AddProductServlet(productDao)), "/add-product");
+        contextHandler.addServlet(new ServletHolder(new GetProductsServlet(productDao)), "/get-products");
+        contextHandler.addServlet(new ServletHolder(new QueryServlet(productDao)), "/query");
+
+        return contextHandler;
     }
 }
