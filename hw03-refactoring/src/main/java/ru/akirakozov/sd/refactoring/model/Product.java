@@ -28,4 +28,9 @@ public class Product {
     public void setPrice(long price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s\t%d", getName(), getPrice());
+    }
 }
