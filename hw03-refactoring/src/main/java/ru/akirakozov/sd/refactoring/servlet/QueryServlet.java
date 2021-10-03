@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * @author akirakozov
  */
-public class QueryServlet extends AbstractHtmlServlet {
+public class QueryServlet extends AbstractProductHtmlServlet {
     private final ProductDao productDao;
 
     public QueryServlet(ProductDao productDao) {
@@ -21,10 +21,10 @@ public class QueryServlet extends AbstractHtmlServlet {
         String command = request.getParameter("command");
         switch (command) {
             case "max":
-                printer.printProduct("Product with max price", productDao.findMax());
+                printProduct(printer, "Product with max price", productDao.findMax());
                 break;
             case "min":
-                printer.printProduct("Product with min price", productDao.findMin());
+                printProduct(printer, "Product with min price", productDao.findMin());
                 break;
             case "sum":
                 printer.printPage("Summary price: " + productDao.sumPrices());

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * @author akirakozov
  */
-public class GetProductsServlet extends AbstractHtmlServlet {
+public class GetProductsServlet extends AbstractProductHtmlServlet {
     private final ProductDao productDao;
 
     public GetProductsServlet(ProductDao productDao) {
@@ -18,6 +18,6 @@ public class GetProductsServlet extends AbstractHtmlServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HtmlPrinter printer) throws SQLException {
-        printer.printProducts(productDao.findAll());
+        printProducts(printer, productDao.findAll());
     }
 }
