@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("SameParameterValue")
 public abstract class AbstractDao<T> {
     protected ResultSet executeQuery(String query) throws SQLException {
         try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
