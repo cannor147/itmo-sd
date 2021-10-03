@@ -2,8 +2,8 @@ package ru.akirakozov.sd.refactoring.dao;
 
 import ru.akirakozov.sd.refactoring.model.Product;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
