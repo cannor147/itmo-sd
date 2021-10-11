@@ -12,9 +12,13 @@
                     </div>
                 </#list>
             </#if>
+            <form class="create-task-list-form" method="post" action="/task-list/">
+                <label>Create new task list: <input id="task-list-name" name="name" type="text"></label>
+                <input class="submit" type="submit">
+            </form>
         </div>
         <div class="board-wrapper">
-            <@c.boardView board=board></@c.boardView>
+            <@c.boardView board=board createLink='/task/'></@c.boardView>
         </div>
     </div>
 </@c.page>

@@ -9,6 +9,9 @@ import com.github.cannor147.itmo.software.lab04.model.Task;
 import com.github.cannor147.itmo.software.lab04.model.TaskList;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.Optional;
 
+import static com.github.cannor147.itmo.software.lab04.model.Status.*;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
@@ -47,14 +51,18 @@ public class TaskListController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/")
-    public ResponseEntity<String> create(@RequestParam("name") String name) {
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<String> create(@ModelAttribute TaskList formData) {
+        final String name = formData.getName();
         if (Strings.isBlank(name)) {
             return ResponseEntity.badRequest().body("Task name required");
         }
         final TaskList taskList = new TaskList(-1, name, new Date());
         taskListDao.create(taskList);
-        return ResponseEntity.ok("Task list created");
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/");
+        return new ResponseEntity<>(null, headers, HttpStatus.FOUND);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -103,9 +111,7 @@ public class TaskListController {
     }
 
     @PostMapping(value = "/{id}/task")
-    public ResponseEntity<String> createTask(@PathVariable("id") String id,
-                                         @RequestParam("name") String name,
-                                         @RequestParam("description") String description) {
+    public ResponseEntity<String> createTask(@PathVariable("id") String id, @ModelAttribute Task formData) {
         long taskListId;
         try {
             taskListId = Long.parseLong(id);
@@ -118,13 +124,16 @@ public class TaskListController {
             return ResponseEntity.notFound().build();
         }
 
-        if (Strings.isBlank(name)) {
+        if (Strings.isBlank(formData.getName())) {
             return ResponseEntity.badRequest().body("Task name required");
-        } else if (Strings.isBlank(description)) {
+        } else if (Strings.isBlank(formData.getDescription())) {
             return ResponseEntity.badRequest().body("Task description required");
         }
-        final Task task = new Task(-1, name, description, Status.TO_DO, taskListId, new Date());
+        final Task task = new Task(-1, formData.getName(), formData.getDescription(), TO_DO, taskListId, new Date());
         taskDao.create(task);
-        return ResponseEntity.ok("Task created");
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/task-list/" + taskListId);
+        return new ResponseEntity<>(null, headers, HttpStatus.FOUND);
     }
 }

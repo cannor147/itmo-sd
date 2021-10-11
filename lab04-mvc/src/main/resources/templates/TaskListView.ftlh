@@ -7,7 +7,7 @@
             <input onclick="runAction('DELETE', '/task/${taskList.id}')" type="image" src="/remove.png"
                    alt="Delete task list" class="icon-input delete-task-list">
         </div>
-        <@c.boardView board=board></@c.boardView>
+        <@c.boardView board=board createLink='/task-list/${taskList.id}/task/'></@c.boardView>
         <div class="date">Created: ${taskList.creationDate?date}</div>
     <#else>
         <div class="error">No such task list</div>

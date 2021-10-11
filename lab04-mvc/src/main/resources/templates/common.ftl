@@ -62,7 +62,7 @@
     <p>${task.description}</p>
 </#macro>
 
-<#macro boardView board>
+<#macro boardView board createLink>
 <#-- @ftlvariable name="board" type="com.github.cannor147.itmo.software.lab04.dto.BoardDto" -->
     <div class="board">
         <div class="to-do column">
@@ -76,6 +76,12 @@
                     </#list>
                 </ul>
             </#if>
+            <form class="create-task-form" method="post" action="${createLink}">
+                <label for="task-name">Create new task:</label>
+                <input id="task-name" name="name" type="text">
+                <label><textarea id="task-description" name="description"></textarea></label>
+                <input class="submit" type="submit">
+            </form>
         </div>
         <div class="in-progress column">
             <h3 class="column-name">In Progress</h3>

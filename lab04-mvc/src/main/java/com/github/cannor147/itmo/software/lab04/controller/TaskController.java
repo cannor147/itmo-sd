@@ -8,6 +8,8 @@ import com.github.cannor147.itmo.software.lab04.model.Task;
 import com.github.cannor147.itmo.software.lab04.model.TaskList;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.Optional;
+
+import static com.github.cannor147.itmo.software.lab04.model.Status.*;
 
 @Controller
 @RequestMapping(value = "/task")
@@ -42,16 +46,18 @@ public class TaskController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<String> create(@RequestParam("name") String name,
-                                         @RequestParam("description") String description) {
-        if (Strings.isBlank(name)) {
+    public ResponseEntity<String> create(@ModelAttribute Task formData) {
+        if (Strings.isBlank(formData.getName())) {
             return ResponseEntity.badRequest().body("Task name required");
-        } else if (Strings.isBlank(description)) {
+        } else if (Strings.isBlank(formData.getDescription())) {
             return ResponseEntity.badRequest().body("Task description required");
         }
-        final Task task = new Task(-1, name, description, Status.TO_DO, null, new Date());
+        final Task task = new Task(-1, formData.getName(), formData.getDescription(), TO_DO, null, new Date());
         taskDao.create(task);
-        return ResponseEntity.ok("Task created");
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/");
+        return new ResponseEntity<>(null, headers, HttpStatus.FOUND);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -84,7 +90,7 @@ public class TaskController {
 
         Status taskStatus;
         try {
-            taskStatus = Status.valueOf(status);
+            taskStatus = valueOf(status);
         } catch (IllegalArgumentException e) {
             taskStatus = null;
         }

@@ -118,3 +118,21 @@
     margin-top: 8px;
 }
 
+.create-task-list-form {
+    margin-top: 16px;
+}
+
+.submit {
+    margin-top: 4px;
+}
+
+.create-task-form {
+    margin-top: 8px;
+    border: solid 1px black;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.create-task-form * {
+    display: block;
+}
