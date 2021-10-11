@@ -23,51 +23,54 @@
 </#macro>
 
 <#macro listLink taskList>
+<#-- @ftlvariable name="task" type="com.github.cannor147.itmo.software.lab04.model.TaskList" -->
     <a href="/task-list/${taskList.id}" class="list-link list-link-${taskList.id % 6}">${taskList.name}</a>
 </#macro>
 
-<#macro taskView task showListLink=true>
+<#macro taskView task>
+<#-- @ftlvariable name="task" type="com.github.cannor147.itmo.software.lab04.dto.TaskDto" -->
     <a href="/task/${task.id}"><b>${task.name}</b></a>
-    <#if task.taskList?? && showListLink>
+    <#if task.taskList??>
         <@listLink taskList=task.taskList></@listLink>
     </#if>
     <p>${task.description}</p>
 </#macro>
 
-<#macro board todoTasks inProgressTasks completedTasks showListLink=true>
+<#macro boardView board>
+<#-- @ftlvariable name="board" type="com.github.cannor147.itmo.software.lab04.dto.BoardDto" -->
     <div class="board">
         <div class="to-do column">
             <h3 class="column-name">To Do</h3>
-            <#if todoTasks?size == 0>
+            <#if board.todoTasks?size == 0>
                 No tasks
             <#else>
                 <ul>
-                    <#list todoTasks as task>
-                        <li><@taskView task showListLink=showListLink></@taskView></li>
+                    <#list board.todoTasks as task>
+                        <li><@taskView task></@taskView></li>
                     </#list>
                 </ul>
             </#if>
         </div>
         <div class="in-progress column">
             <h3 class="column-name">In Progress</h3>
-            <#if inProgressTasks?size == 0>
+            <#if board.inProgressTasks?size == 0>
                 No tasks
             <#else>
                 <ul>
-                    <#list inProgressTasks as task>
-                        <li><@taskView task showListLink=showListLink></@taskView></li>
+                    <#list board.inProgressTasks as task>
+                        <li><@taskView task></@taskView></li>
                     </#list>
                 </ul>
             </#if>
         </div>
         <div class="completed column">
             <h3 class="column-name">Completed</h3>
-            <#if completedTasks?size == 0>
+            <#if board.completedTasks?size == 0>
                 No tasks
             <#else>
                 <ul>
-                    <#list completedTasks as task>
-                        <li><@taskView task showListLink=showListLink></@taskView></li>
+                    <#list board.completedTasks as task>
+                        <li><@taskView task></@taskView></li>
                     </#list>
                 </ul>
             </#if>

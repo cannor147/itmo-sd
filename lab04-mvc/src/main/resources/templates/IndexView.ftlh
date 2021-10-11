@@ -14,7 +14,7 @@
             </#if>
         </div>
         <div class="board-wrapper">
-            <@c.board todoTasks=todoTasks inProgressTasks=inProgressTasks completedTasks=completedTasks></@c.board>
+            <@c.boardView board=board></@c.boardView>
         </div>
     </div>
 </@c.page>

@@ -3,8 +3,7 @@
 <@c.page>
     <#if taskList??>
         <h2 class="title">${taskList.name}</h2>
-        <@c.board todoTasks=todoTasks inProgressTasks=inProgressTasks completedTasks=completedTasks showListLink=false>
-        </@c.board>
+        <@c.boardView board=board></@c.boardView>
         <div class="date">Created: ${taskList.creationDate?date}</div>
     <#else>
         <div class="error">No such task list</div>

@@ -2,6 +2,7 @@ package com.github.cannor147.itmo.software.lab04.controller;
 
 import com.github.cannor147.itmo.software.lab04.dao.TaskDao;
 import com.github.cannor147.itmo.software.lab04.dao.TaskListDao;
+import com.github.cannor147.itmo.software.lab04.dto.BoardDto;
 import com.github.cannor147.itmo.software.lab04.dto.TaskDto;
 import com.github.cannor147.itmo.software.lab04.model.Status;
 import com.github.cannor147.itmo.software.lab04.model.Task;
@@ -14,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 @Controller
@@ -38,16 +39,10 @@ public class TaskListController {
         final ModelAndView modelAndView = new ModelAndView("TaskList");
         taskListDao.findById(taskListId).ifPresent(taskList -> {
             modelAndView.addObject("taskList", taskList);
-
-            final List<TaskDto> tasks = taskDao.findAllByTaskListId(taskList.getId()).stream()
+            final BoardDto board = taskDao.findAllByTaskListId(taskList.getId()).stream()
                     .map(task -> new TaskDto(task, taskList))
-                    .collect(toList());
-            final List<TaskDto> todoTasks = tasks.stream().filter(TaskDto::isTodo).collect(toList());
-            final List<TaskDto> inProgressTasks = tasks.stream().filter(TaskDto::isInProgress).collect(toList());
-            final List<TaskDto> completedTasks = tasks.stream().filter(TaskDto::isCompleted).collect(toList());
-            modelAndView.addObject("todoTasks", todoTasks);
-            modelAndView.addObject("inProgressTasks", inProgressTasks);
-            modelAndView.addObject("completedTasks", completedTasks);
+                    .collect(collectingAndThen(toList(), BoardDto::new));
+            modelAndView.addObject("board", board);
         });
         return modelAndView;
     }
