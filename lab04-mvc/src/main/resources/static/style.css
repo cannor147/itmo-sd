@@ -51,30 +51,35 @@
     text-align: right;
 }
 
-.title-wrapper {
+.centered-title-wrapper {
     position: relative;
-    width: max-content;
     margin: 0 auto;
     text-align: center;
+}
+
+.title-wrapper {
+    position: relative;
 }
 
 .title {
     display: inline-block;
 }
 
-.delete-task-list {
+.icon-actions {
+    display: inline-block;
     position: absolute;
     top: 25px;
-    right: -2rem;
+    right: 0;
 }
 
-.delete-task {
+.task-action {
     float: right;
 }
 
 .icon-input {
     height: 16px;
     width: 16px;
+    margin: 2px;
 }
 
 .list-link {

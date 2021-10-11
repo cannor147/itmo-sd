@@ -7,16 +7,16 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
     <script>
-        function deleteAction(url) {
+        function runAction(method, url, redirectUrl = '/') {
             const XHR = new XMLHttpRequest();
             XHR.addEventListener('load', function() {
-                location.href = '/'
+                location.href = redirectUrl;
             });
             XHR.addEventListener('error', function() {
-                location.href = '/'
+                location.href = redirectUrl;
             });
 
-            XHR.open('DELETE', url);
+            XHR.open(method, url);
             XHR.send();
         }
     </script>
@@ -46,6 +46,18 @@
     <a href="/task/${task.id}"><b>${task.name}</b></a>
     <#if task.taskList??>
         <@listLink taskList=task.taskList></@listLink>
+    </#if>
+    <#if task.status == 'TO_DO'>
+        <input onclick="runAction('POST', '/task/${task.id}/mark?status=IN_PROGRESS')" type="image"
+               src="/round-play-button.png" alt="Delete task list" class="icon-input task-action">
+    </#if>
+    <#if task.status == 'IN_PROGRESS'>
+        <input onclick="runAction('POST', '/task/${task.id}/mark?status=COMPLETED')" type="image"
+               src="/check.png" alt="Delete task list" class="icon-input task-action">
+    </#if>
+    <#if task.status == 'COMPLETED'>
+        <input onclick="runAction('DELETE', '/task/${task.id}')" type="image"
+               src="/remove.png" alt="Delete task list" class="icon-input task-action">
     </#if>
     <p>${task.description}</p>
 </#macro>
