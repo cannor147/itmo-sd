@@ -1,0 +1,94 @@
+.column-name {
+    text-align: center;
+}
+
+.board {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
+.column {
+    width: 33%;
+    padding: 8px;
+}
+
+.column + .column {
+    border-left: solid 1px black;
+}
+
+.footer {
+    width: max-content;
+    margin: 20px auto 0;
+}
+
+.task {
+    width: 33%;
+    margin: 0 auto;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
+.task-lists {
+    display: flex;
+    flex-direction: column;
+    border-right: solid 1px darkblue;
+    width: 15%;
+    padding: 8px;
+}
+
+.board-wrapper {
+    width: 85%;
+}
+
+.date {
+    text-align: right;
+}
+
+.title {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.list-link {
+    padding: 3px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: black;
+}
+
+.list-link-0 {
+    background-color: indianred;
+}
+
+.list-link-1 {
+    background-color: darkolivegreen;
+}
+
+.list-link-2 {
+    background-color: darkgoldenrod;
+}
+
+.list-link-3 {
+    background-color: cornflowerblue;
+}
+
+.list-link-4 {
+    background-color: mediumpurple;
+}
+
+.list-link-5 {
+    background-color: saddlebrown;
+}
+
+.task-list-item {
+    display: block;
+    margin-top: 8px;
+}
+

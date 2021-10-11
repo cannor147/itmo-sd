@@ -1,13 +1,17 @@
 package com.github.cannor147.itmo.software.lab04.controller;
 
 import com.github.cannor147.itmo.software.lab04.dao.TaskDao;
+import com.github.cannor147.itmo.software.lab04.dao.TaskListDao;
+import com.github.cannor147.itmo.software.lab04.dto.TaskDto;
 import com.github.cannor147.itmo.software.lab04.model.Status;
 import com.github.cannor147.itmo.software.lab04.model.Task;
+import com.github.cannor147.itmo.software.lab04.model.TaskList;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.Optional;
@@ -17,9 +21,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskDao taskDao;
+    private final TaskListDao taskListDao;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Task> view(@PathVariable("id") String id) {
+    public ModelAndView view(@PathVariable("id") String id) {
         long taskId;
         try {
             taskId = Long.parseLong(id);
@@ -27,7 +32,13 @@ public class TaskController {
             taskId = -1;
         }
 
-        return taskDao.findById(taskId).map(ResponseEntity::ok).orElseGet(ResponseEntity.notFound()::build);
+        final ModelAndView modelAndView = new ModelAndView("Task");
+        taskDao.findById(taskId).ifPresent(task -> {
+            final Long taskListId = task.getTaskListId();
+            final TaskList taskList = Optional.ofNullable(taskListId).flatMap(taskListDao::findById).orElse(null);
+            modelAndView.addObject("task", new TaskDto(task, taskList));
+        });
+        return modelAndView;
     }
 
     @PostMapping(value = "/")
