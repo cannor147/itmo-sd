@@ -23,6 +23,7 @@
             </div>
             <p>${task.description}</p>
             <div class="date">Created: ${task.creationDate?date}</div>
+            <div class="status">Status: ${task.status?replace('_', ' ')?lower_case}</div>
         </div>
     <#else>
         <div class="error">No such task</div>

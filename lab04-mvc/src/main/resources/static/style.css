@@ -47,7 +47,7 @@
     width: 85%;
 }
 
-.date {
+.date, .status {
     text-align: right;
 }
 
