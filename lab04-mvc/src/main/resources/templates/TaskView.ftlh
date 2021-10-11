@@ -9,8 +9,8 @@
                     <@c.listLink task.taskList></@c.listLink>
                 </#if>
                 <div class="icon-actions">
-                    <input onclick="runAction('DELETE', '/task-list/${task.id}')" type="image" src="/remove.png"
-                           alt="Delete task list" class="icon-input task-action">
+                    <input onclick="runAction('DELETE', '/task/${task.id}')" type="image" src="/remove.png"
+                           alt="Delete task" class="icon-input task-action">
                     <#if task.status == 'TO_DO'>
                         <input onclick="runAction('POST', '/task/${task.id}/mark?status=IN_PROGRESS', '/task/${task.id}')"
                                type="image" src="/round-play-button.png" alt="Delete task list" class="icon-input task-action">

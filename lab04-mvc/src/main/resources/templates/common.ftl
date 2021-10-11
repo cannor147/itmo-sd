@@ -48,15 +48,15 @@
         <@listLink taskList=task.taskList></@listLink>
     </#if>
     <#if task.status == 'TO_DO'>
-        <input onclick="runAction('POST', '/task/${task.id}/mark?status=IN_PROGRESS')" type="image"
+        <input onclick="runAction('POST', '/task/${task.id}/mark?status=IN_PROGRESS', location.href)" type="image"
                src="/round-play-button.png" alt="Delete task list" class="icon-input task-action">
     </#if>
     <#if task.status == 'IN_PROGRESS'>
-        <input onclick="runAction('POST', '/task/${task.id}/mark?status=COMPLETED')" type="image"
+        <input onclick="runAction('POST', '/task/${task.id}/mark?status=COMPLETED', location.href)" type="image"
                src="/check.png" alt="Delete task list" class="icon-input task-action">
     </#if>
     <#if task.status == 'COMPLETED'>
-        <input onclick="runAction('DELETE', '/task/${task.id}')" type="image"
+        <input onclick="runAction('DELETE', '/task/${task.id}', location.href)" type="image"
                src="/remove.png" alt="Delete task list" class="icon-input task-action">
     </#if>
     <p>${task.description}</p>
