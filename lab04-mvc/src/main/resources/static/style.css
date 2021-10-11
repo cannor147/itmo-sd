@@ -51,9 +51,30 @@
     text-align: right;
 }
 
-.title {
+.title-wrapper {
+    position: relative;
+    width: max-content;
     margin: 0 auto;
     text-align: center;
+}
+
+.title {
+    display: inline-block;
+}
+
+.delete-task-list {
+    position: absolute;
+    top: 25px;
+    right: -2rem;
+}
+
+.delete-task {
+    float: right;
+}
+
+.icon-input {
+    height: 16px;
+    width: 16px;
 }
 
 .list-link {

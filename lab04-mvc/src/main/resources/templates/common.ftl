@@ -6,6 +6,20 @@
         <title>Task Viewer</title>
         <link rel="stylesheet" type="text/css" href="/style.css">
     </head>
+    <script>
+        function deleteAction(url) {
+            const XHR = new XMLHttpRequest();
+            XHR.addEventListener('load', function() {
+                location.href = '/'
+            });
+            XHR.addEventListener('error', function() {
+                location.href = '/'
+            });
+
+            XHR.open('DELETE', url);
+            XHR.send();
+        }
+    </script>
     <body>
     <header class="header">
 <#--        <img src="https://img1.picmix.com/output/stamp/normal/2/9/8/3/1793892_62927.gif"-->
