@@ -6,6 +6,7 @@ import com.github.cannor147.itmo.software.lab04.dto.TaskDto;
 import com.github.cannor147.itmo.software.lab04.model.Status;
 import com.github.cannor147.itmo.software.lab04.model.Task;
 import com.github.cannor147.itmo.software.lab04.model.TaskList;
+import com.github.cannor147.itmo.software.lab04.util.ParseUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
@@ -29,12 +30,7 @@ public class TaskController {
 
     @GetMapping(value = "/{id}")
     public ModelAndView view(@PathVariable("id") String id) {
-        long taskId;
-        try {
-            taskId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskId = -1;
-        }
+        final long taskId = ParseUtils.parseLong(id);
 
         final ModelAndView modelAndView = new ModelAndView("Task");
         taskDao.findById(taskId).ifPresent(task -> {
@@ -62,39 +58,20 @@ public class TaskController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") String id) {
-        long taskId;
-        try {
-            taskId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskId = -1;
-        }
-
+        final long taskId = ParseUtils.parseLong(id);
         taskDao.deleteById(taskId);
         return ResponseEntity.ok("Task deleted");
     }
 
     @PostMapping(value = "/{id}/mark")
-    public ResponseEntity<String> mark(@PathVariable("id") String id,
-                                       @RequestParam("status") String status) {
-        long taskId;
-        try {
-            taskId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskId = -1;
-        }
-
+    public ResponseEntity<String> mark(@PathVariable("id") String id, @RequestParam("status") String status) {
+        final long taskId = ParseUtils.parseLong(id);
         final Optional<Task> task = taskDao.findById(taskId);
         if (task.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Status taskStatus;
-        try {
-            taskStatus = valueOf(status);
-        } catch (IllegalArgumentException e) {
-            taskStatus = null;
-        }
-
+        final Status taskStatus = ParseUtils.parseEnum(status, Status.class);
         if (taskStatus == null) {
             return ResponseEntity.badRequest().body("Unknown status");
         }

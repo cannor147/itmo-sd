@@ -4,9 +4,9 @@ import com.github.cannor147.itmo.software.lab04.dao.TaskDao;
 import com.github.cannor147.itmo.software.lab04.dao.TaskListDao;
 import com.github.cannor147.itmo.software.lab04.dto.BoardDto;
 import com.github.cannor147.itmo.software.lab04.dto.TaskDto;
-import com.github.cannor147.itmo.software.lab04.model.Status;
 import com.github.cannor147.itmo.software.lab04.model.Task;
 import com.github.cannor147.itmo.software.lab04.model.TaskList;
+import com.github.cannor147.itmo.software.lab04.util.ParseUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.Optional;
 
-import static com.github.cannor147.itmo.software.lab04.model.Status.*;
+import static com.github.cannor147.itmo.software.lab04.model.Status.TO_DO;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
@@ -33,13 +33,7 @@ public class TaskListController {
 
     @GetMapping(value = "/{id}")
     public ModelAndView view(@PathVariable("id") String id) {
-        long taskListId;
-        try {
-            taskListId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskListId = -1;
-        }
-
+        final long taskListId = ParseUtils.parseLong(id);
         final ModelAndView modelAndView = new ModelAndView("TaskList");
         taskListDao.findById(taskListId).ifPresent(taskList -> {
             modelAndView.addObject("taskList", taskList);
@@ -67,38 +61,20 @@ public class TaskListController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") String id) {
-        long taskListId;
-        try {
-            taskListId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskListId = -1;
-        }
-
+        final long taskListId = ParseUtils.parseLong(id);
         taskListDao.deleteById(taskListId);
         return ResponseEntity.ok("Task list deleted");
     }
 
     @PostMapping(value = "/{id}/add/{taskId}")
     public ResponseEntity<String> addTask(@PathVariable("id") String id, @PathVariable("taskId") String addingTaskId) {
-        long taskListId;
-        try {
-            taskListId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskListId = -1;
-        }
-
+        final long taskListId = ParseUtils.parseLong(id);
         final Optional<TaskList> taskList = taskListDao.findById(taskListId);
         if (taskList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        long taskId;
-        try {
-            taskId = Long.parseLong(addingTaskId);
-        } catch (NumberFormatException e) {
-            taskId = -1;
-        }
-
+        final long taskId = ParseUtils.parseLong(addingTaskId);
         final Optional<Task> task = taskDao.findById(taskId);
         if (task.isEmpty()) {
             return ResponseEntity.badRequest().body("No such task");
@@ -112,13 +88,7 @@ public class TaskListController {
 
     @PostMapping(value = "/{id}/task")
     public ResponseEntity<String> createTask(@PathVariable("id") String id, @ModelAttribute Task formData) {
-        long taskListId;
-        try {
-            taskListId = Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            taskListId = -1;
-        }
-
+        final long taskListId = ParseUtils.parseLong(id);
         final Optional<TaskList> taskList = taskListDao.findById(taskListId);
         if (taskList.isEmpty()) {
             return ResponseEntity.notFound().build();
