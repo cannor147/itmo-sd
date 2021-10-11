@@ -5,14 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskList {
+public class TaskList implements Copyable<TaskList> {
     private long id;
     private String name;
-    private List<Task> tasks;
     private Date creationDate;
+
+    @Override
+    public TaskList copy() {
+        return new TaskList(id, name, creationDate);
+    }
 }
