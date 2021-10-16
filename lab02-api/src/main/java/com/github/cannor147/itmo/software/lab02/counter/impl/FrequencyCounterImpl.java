@@ -2,7 +2,7 @@ package com.github.cannor147.itmo.software.lab02.counter.impl;
 
 import com.github.cannor147.itmo.software.lab02.counter.FrequencyCounter;
 import com.github.cannor147.itmo.software.lab02.vk.VkRequester;
-import com.github.cannor147.itmo.software.lab02.vk.impl.VkRequesterImpl;
+import lombok.RequiredArgsConstructor;
 import one.util.streamex.IntStreamEx;
 
 import java.time.LocalDateTime;
@@ -10,7 +10,10 @@ import java.time.ZoneId;
 import java.time.chrono.ChronoZonedDateTime;
 import java.util.Date;
 
+@RequiredArgsConstructor
 public class FrequencyCounterImpl implements FrequencyCounter {
+    private final VkRequester vkRequester;
+
     @Override
     public int[] count(String hashTag, int hours) {
         if (hours < 1 || hours > 24) {
@@ -18,7 +21,6 @@ public class FrequencyCounterImpl implements FrequencyCounter {
         }
 
         final LocalDateTime currentDate = LocalDateTime.now();
-        final VkRequester vkRequester = new VkRequesterImpl();
         return IntStreamEx.range(hours + 1).boxed()
                 .map(currentDate::minusHours)
                 .map(date -> date.atZone(ZoneId.systemDefault()))
