@@ -13,6 +13,10 @@ import java.util.Date;
 public class FrequencyCounterImpl implements FrequencyCounter {
     @Override
     public int[] count(String hashTag, int hours) {
+        if (hours < 1 || hours > 24) {
+            throw new IllegalArgumentException("Number of hours should be in range from 1 to 24");
+        }
+
         final LocalDateTime currentDate = LocalDateTime.now();
         final VkRequester vkRequester = new VkRequesterImpl();
         return IntStreamEx.range(hours + 1).boxed()
