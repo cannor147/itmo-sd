@@ -1,6 +1,8 @@
 package com.github.cannor147.itmo.software.lab05.model;
 
 import lombok.RequiredArgsConstructor;
+import one.util.streamex.EntryStream;
+import one.util.streamex.StreamEx;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -9,6 +11,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MatrixGraph implements Graph {
     private final boolean[][] adjacencyMatrix;
+
+    public MatrixGraph(List<List<Boolean>> adjacencyMatrix) {
+        final int maxWidth = StreamEx.of(adjacencyMatrix).mapToInt(List::size).max().orElse(0);
+        final int size = Math.max(adjacencyMatrix.size(), maxWidth);
+        this.adjacencyMatrix = new boolean[size][size];
+        EntryStream.of(adjacencyMatrix).forKeyValue((i, line) -> {
+            EntryStream.of(line).forKeyValue((j, item) -> this.adjacencyMatrix[i][j] = item);
+        });
+    }
 
     @Override
     public int size() {
