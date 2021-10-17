@@ -19,7 +19,7 @@ public class MatrixGraph implements Graph {
     public List<Pair<Integer, Integer>> getEdges() {
         final List<Pair<Integer, Integer>> edges = new ArrayList<>();
         for (int i = 0; i < adjacencyMatrix.length; i++) {
-            for (int j = 0; j < adjacencyMatrix[0].length; j++) {
+            for (int j = 0; j < adjacencyMatrix[i].length; j++) {
                 if (adjacencyMatrix[i][j]) {
                     edges.add(Pair.of(i, j));
                 }
