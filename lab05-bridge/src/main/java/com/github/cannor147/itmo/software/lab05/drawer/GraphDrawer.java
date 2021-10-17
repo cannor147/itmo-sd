@@ -20,10 +20,15 @@ public class GraphDrawer {
 
         final double radius = Math.min(width, height) / 3.0;
         final Point2D center = new Point2D.Double(width / 2.0, height / 2.0);
+        if (graph.size() == 1) {
+            drawingApi.drawCircle(center.getX(), center.getY(), 10);
+            drawingApi.show();
+            return;
+        }
+
         final List<Point2D> points = IntStreamEx.range(graph.size())
                 .mapToObj(vertex -> getPoint(graph, center, radius, vertex))
                 .toList();
-
         points.forEach(point -> drawingApi.drawCircle(point.getX(), point.getY(), 10));
         StreamEx.of(graph.getEdges())
                 .mapToEntry(Pair::getLeft, Pair::getRight)
