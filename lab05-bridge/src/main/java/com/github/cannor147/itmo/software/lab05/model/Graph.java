@@ -1,8 +1,10 @@
 package com.github.cannor147.itmo.software.lab05.model;
 
-import com.github.cannor147.itmo.software.lab05.api.DrawingApi;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
 
 public interface Graph {
-    void draw(DrawingApi drawingApi);
     int size();
+    List<Pair<Integer, Integer>> getEdges();
 }
