@@ -2,6 +2,7 @@ package com.github.cannor147.itmo.software.lab06.tokenizer;
 
 import com.github.cannor147.itmo.software.lab06.exception.UnexpectedSymbolException;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 
 import static com.github.cannor147.itmo.software.lab06.tokenizer.TokenType.*;
 
-public class Tokenizer {
+public class Tokenizer implements Iterable<Token> {
     private static final Consumer<Character> EMPTY_ACTION = x -> {};
 
     private final CharSequence sequence;
@@ -68,5 +69,20 @@ public class Tokenizer {
             action.accept(sequence.charAt(currentIndex));
             currentIndex++;
         }
+    }
+
+    @Override
+    public Iterator<Token> iterator() {
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return !currentToken.get().isEnd();
+            }
+
+            @Override
+            public Token next() {
+                return nextToken();
+            }
+        };
     }
 }
