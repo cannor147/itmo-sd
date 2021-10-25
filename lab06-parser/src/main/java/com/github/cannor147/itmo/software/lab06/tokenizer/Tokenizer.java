@@ -28,12 +28,13 @@ public class Tokenizer {
 
     public synchronized Token nextToken() {
         iterateWhile(Character::isWhitespace, EMPTY_ACTION);
-        if (currentIndex >= sequence.length()) {
-            currentToken.set(Token.end());
+        final int position = currentIndex;
+        if (position >= sequence.length()) {
+            currentToken.set(Token.end(sequence.length()));
             return currentToken.get();
         }
 
-        final char firstSymbol = sequence.charAt(currentIndex);
+        final char firstSymbol = sequence.charAt(this.currentIndex);
         final TokenType type = switch (firstSymbol) {
             case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> NUMBER;
             case '+' -> PLUS;
@@ -43,7 +44,7 @@ public class Tokenizer {
             case '%' -> PERCENT;
             case '(' -> OPENING_BRACKET;
             case ')' -> CLOSING_BRACKET;
-            default -> throw new UnexpectedSymbolException(sequence, currentIndex);
+            default -> throw new UnexpectedSymbolException(sequence, this.currentIndex);
         };
 
         final String tokenValue = switch (type) {
@@ -53,12 +54,12 @@ public class Tokenizer {
                 yield value.toString();
             }
             case OPENING_BRACKET, CLOSING_BRACKET, PLUS, MINUS, ASTERISK, SLASH, PERCENT -> {
-                currentIndex++;
+                this.currentIndex++;
                 yield String.valueOf(firstSymbol);
             }
             case BEGIN, END -> throw new IllegalStateException("Unexpected default token type.");
         };
-        currentToken.set(new Token(type, tokenValue));
+        currentToken.set(new Token(type, tokenValue, position));
         return currentToken.get();
     }
 

@@ -4,16 +4,13 @@ import static com.github.cannor147.itmo.software.lab06.tokenizer.TokenType.BEGIN
 import static com.github.cannor147.itmo.software.lab06.tokenizer.TokenType.END;
 
 @SuppressWarnings("unused")
-public record Token(TokenType type, String value) {
-    private static final Token BEGIN_TOKEN = new Token(BEGIN, "");
-    private static final Token END_TOKEN = new Token(END, "");
-
+public record Token(TokenType type, String value, int position) {
     public static Token begin() {
-        return BEGIN_TOKEN;
+        return new Token(BEGIN, "", -1);
     }
 
-    public static Token end() {
-        return END_TOKEN;
+    public static Token end(int size) {
+        return new Token(END, "", size);
     }
 
     public boolean isBegin() {
