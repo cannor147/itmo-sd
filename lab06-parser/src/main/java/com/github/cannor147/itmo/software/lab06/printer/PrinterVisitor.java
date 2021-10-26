@@ -19,6 +19,7 @@ public class PrinterVisitor extends ParseableVisitor {
         this.outputStream = outputStream;
     }
 
+    @SuppressWarnings("unused")
     public PrinterVisitor(CharSequence charSequence, OutputStream outputStream) {
         super(charSequence);
         this.outputStream = outputStream;

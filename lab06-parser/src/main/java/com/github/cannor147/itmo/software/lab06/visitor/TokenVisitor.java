@@ -9,7 +9,13 @@ public abstract class TokenVisitor {
 
     protected void visit(Token token) {
         switch (token.type()) {
-            case NUMBER -> visitNumber(Long.parseLong(token.value()));
+            case NUMBER -> {
+                try {
+                    visitNumber(Long.parseLong(token.value()));
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Too big number.");
+                }
+            }
             case PLUS, MINUS, ASTERISK, SLASH, PERCENT -> visitOperator(Operator.fromToken(token));
             case OPENING_BRACKET -> visitBracket(true);
             case CLOSING_BRACKET -> visitBracket(false);

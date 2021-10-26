@@ -2,7 +2,6 @@ package com.github.cannor147.itmo.software.lab06.parser;
 
 import com.github.cannor147.itmo.software.lab06.exception.ParsingException;
 import com.github.cannor147.itmo.software.lab06.exception.UnexpectedTokenException;
-import com.github.cannor147.itmo.software.lab06.parser.Parser;
 import com.github.cannor147.itmo.software.lab06.tokenizer.Token;
 import com.github.cannor147.itmo.software.lab06.tokenizer.TokenType;
 import com.github.cannor147.itmo.software.lab06.tokenizer.Tokenizer;
@@ -32,16 +31,22 @@ public class ParserVisitor extends TokenVisitor implements Parser {
     }
 
     public List<Token> parse() {
-        layers.push(new ArrayDeque<>());
-        while (!tokenizer.currentToken().isEnd()) {
-            final Token previousToken = tokenizer.currentToken();
-            final Token token = tokenizer.nextToken();
-            checkTokenOrder(token, previousToken);
-            if (!token.isEnd()) {
-                visit(token);
+        if (layers.isEmpty()) {
+            layers.push(new ArrayDeque<>());
+            while (!tokenizer.currentToken().isEnd()) {
+                final Token previousToken = tokenizer.currentToken();
+                final Token token = tokenizer.nextToken();
+                checkTokenOrder(token, previousToken);
+                if (!token.isEnd()) {
+                    visit(token);
+                }
             }
         }
-        foldPriorityLayers(-1);
+
+        foldLayers(-1);
+        if (layers.size() != 1) {
+            throw new UnexpectedTokenException(tokenizer.currentToken());
+        }
 
         final List<Token> result = new ArrayList<>();
         final Deque<Token> mainLayer = layers.getLast();
@@ -61,7 +66,7 @@ public class ParserVisitor extends TokenVisitor implements Parser {
 
     @Override
     protected void visitOperator(Operator operator) {
-        foldPriorityLayers(operator.getPrecedence());
+        foldLayers(operator.getPrecedence());
         if (layers.peek() == null) {
             throw new ParsingException();
         }
@@ -76,7 +81,10 @@ public class ParserVisitor extends TokenVisitor implements Parser {
             layers.push(new ArrayDeque<>());
             precedences.push(-2);
         } else {
-            foldPriorityLayers(-1);
+            foldLayers(-1);
+            if (precedences.isEmpty()) {
+                throw new UnexpectedTokenException(tokenizer.currentToken());
+            }
             precedences.pop();
             final Deque<Token> currentLayer = layers.pop();
             if (currentLayer.size() == 0) {
@@ -109,7 +117,7 @@ public class ParserVisitor extends TokenVisitor implements Parser {
         }
     }
 
-    private void foldPriorityLayers(int precedence) {
+    private void foldLayers(int precedence) {
         while (!precedences.isEmpty() && precedences.peek() >= precedence) {
             precedences.pop();
             final Deque<Token> rightOperand = layers.pop();

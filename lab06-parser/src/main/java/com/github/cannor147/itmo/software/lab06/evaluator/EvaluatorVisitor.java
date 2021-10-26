@@ -18,6 +18,7 @@ public class EvaluatorVisitor extends ParseableVisitor {
         this.result = new ArrayDeque<>();
     }
 
+    @SuppressWarnings("unused")
     public EvaluatorVisitor(CharSequence charSequence) {
         super(charSequence);
         this.result = new ArrayDeque<>();
@@ -30,7 +31,7 @@ public class EvaluatorVisitor extends ParseableVisitor {
         }
 
         if (result.size() != 1) {
-            throw new EvaluationException("Unknown evaluation error.");
+            throw new EvaluationException("No expression provided.");
         }
         return result.pop();
     }

@@ -19,15 +19,14 @@ public class Application {
     public static void work(String expression, PrintStream printStream, PrintStream errorStream) {
         try {
             final ParserVisitor parser = new ParserVisitor(expression);
-            final PrinterVisitor printer = new PrinterVisitor(parser, printStream);
-            final EvaluatorVisitor evaluator = new EvaluatorVisitor(parser);
 
+            final PrinterVisitor printer = new PrinterVisitor(parser, printStream);
             printer.print();
+
+            final EvaluatorVisitor evaluator = new EvaluatorVisitor(parser);
             printStream.println(evaluator.evaluate());
         } catch (Exception e) {
             errorStream.println(e.getMessage());
         }
     }
-
-
 }
