@@ -1,7 +1,10 @@
-package com.github.cannor147.itmo.software.lab06.visitor;
+package com.github.cannor147.itmo.software.lab06.printer;
 
 import com.github.cannor147.itmo.software.lab06.exception.ParsingException;
+import com.github.cannor147.itmo.software.lab06.parser.ParserVisitor;
 import com.github.cannor147.itmo.software.lab06.tokenizer.Token;
+import com.github.cannor147.itmo.software.lab06.visitor.Operator;
+import com.github.cannor147.itmo.software.lab06.visitor.ParseableVisitor;
 
 import java.io.IOException;
 import java.io.OutputStream;

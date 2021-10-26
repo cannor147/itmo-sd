@@ -1,16 +1,19 @@
-package com.github.cannor147.itmo.software.lab06.visitor;
+package com.github.cannor147.itmo.software.lab06.parser;
 
 import com.github.cannor147.itmo.software.lab06.exception.ParsingException;
 import com.github.cannor147.itmo.software.lab06.exception.UnexpectedTokenException;
+import com.github.cannor147.itmo.software.lab06.parser.Parser;
 import com.github.cannor147.itmo.software.lab06.tokenizer.Token;
 import com.github.cannor147.itmo.software.lab06.tokenizer.TokenType;
 import com.github.cannor147.itmo.software.lab06.tokenizer.Tokenizer;
+import com.github.cannor147.itmo.software.lab06.visitor.Operator;
+import com.github.cannor147.itmo.software.lab06.visitor.TokenVisitor;
 
 import java.util.*;
 
 import static com.github.cannor147.itmo.software.lab06.tokenizer.TokenType.*;
 
-public class ParserVisitor extends TokenVisitor {
+public class ParserVisitor extends TokenVisitor implements Parser {
     private static final Set<TokenType> NUMERIC_AVAILABLE_TYPES = Set.of(
             NUMBER, CLOSING_BRACKET, END
     );
