@@ -8,7 +8,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final Profiler profiler = Profiler.getInstance();
         profiler.setPackagePrefix("com.github.cannor147.itmo.tt.lab");
-        Task3.main(args);
-        profiler.printStats(System.out);
+        try {
+            Task3.main(args);
+        } finally {
+            profiler.printStats(System.out);
+        }
     }
 }

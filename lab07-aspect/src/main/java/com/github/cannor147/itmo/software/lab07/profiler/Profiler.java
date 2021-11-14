@@ -40,10 +40,12 @@ public class Profiler {
     }
 
     public synchronized void printStats(PrintStream printStream) {
+        final SignatureTree<String> signatureTree = new SignatureTree<>("=== Profiling ===");
         EntryStream.of(pathToStatisticsMap)
                 .mapValues(DoubleSummaryStatistics::toString)
-                .mapKeyValue((name, stats) -> stats.replace(DoubleSummaryStatistics.class.getSimpleName(), name))
-                .forEach(printStream::println);
+                .mapValues(stats -> stats.replace(DoubleSummaryStatistics.class.getSimpleName(), ""))
+                .forKeyValue(signatureTree::add);
+        signatureTree.print(printStream);
     }
 
     public String getPackagePrefix() {
