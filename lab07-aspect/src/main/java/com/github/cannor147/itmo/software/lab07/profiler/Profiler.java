@@ -1,19 +1,14 @@
 package com.github.cannor147.itmo.software.lab07.profiler;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import one.util.streamex.EntryStream;
 import org.aspectj.lang.Signature;
 
 import java.io.PrintStream;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
-import java.util.LongSummaryStatistics;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Profiler {
     private static final Profiler INSTANCE = new Profiler();
 
