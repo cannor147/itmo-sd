@@ -10,4 +10,6 @@ public interface EventsStatistic {
     Map<String, Double> getAllEventStatistic();
 
     void printStatistic();
+
+    void clear();
 }

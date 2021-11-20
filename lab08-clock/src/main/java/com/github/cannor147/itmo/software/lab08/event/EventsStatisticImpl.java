@@ -53,4 +53,9 @@ public class EventsStatisticImpl implements EventsStatistic {
     public void printStatistic() {
         EntryStream.of(getAllEventStatistic()).forKeyValue((name, stats) -> System.out.println(name + ": " + stats));
     }
+
+    @Override
+    public void clear() {
+        this.eventToInstantsMap.clear();
+    }
 }

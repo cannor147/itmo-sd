@@ -8,6 +8,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Collections;
 import java.util.Map;
 
 public class EventStatisticTest {
@@ -80,5 +81,15 @@ public class EventStatisticTest {
         clock.offset(Duration.ofMinutes(5));
         final Map<String, Double> expectedMap = Map.of("register", 3.0 / 60, "login", 2.0 / 60, "logout", 2.0 / 60);
         Assertions.assertEquals(expectedMap, eventsStatistic.getAllEventStatistic());
+    }
+
+    @Test
+    public void testClear() {
+        final MutableClock clock = new MutableClock(Clock.fixed(Instant.now(), ZoneId.systemDefault()));
+        final EventsStatistic eventsStatistic = new EventsStatisticImpl(clock);
+        eventsStatistic.incEvent("test");
+        Assertions.assertEquals(1.0 / 60, eventsStatistic.getEventStatisticByName("test"));
+        eventsStatistic.clear();
+        Assertions.assertEquals(Collections.emptyMap(), eventsStatistic.getAllEventStatistic());
     }
 }
