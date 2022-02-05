@@ -1,3 +1,5 @@
+package com.github.cannor147.itmo.sd.lab01;
+
 import java.util.HashMap;
 
 public class SimpleLruCache<K, V> extends AbstractLruCache<K, V> {

@@ -1,3 +1,5 @@
+package com.github.cannor147.itmo.sd.lab01;
+
 public abstract class AbstractLruCache<K, V> implements LruCache<K, V> {
     private int capacity;
 

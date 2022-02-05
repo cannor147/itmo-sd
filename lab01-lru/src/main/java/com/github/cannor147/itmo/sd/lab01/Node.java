@@ -1,3 +1,5 @@
+package com.github.cannor147.itmo.sd.lab01;
+
 public class Node<K, V> {
     private K key;
     private V value;
