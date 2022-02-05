@@ -5,7 +5,7 @@
     <option name="PROGRAM_PARAMETERS" value="-d awt -w 800 -h 600 -t matrix -f example/matrix/a.txt" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.github.cannor147.itmo.software.lab05.*" />
+        <option name="PATTERN" value="com.github.cannor147.itmo.sd.lab05.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
