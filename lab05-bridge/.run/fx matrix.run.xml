@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="fx matrix" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.github.cannor147.itmo.sd.lab05.Application" />
+    <module name="lab05-bridge" />
+    <option name="PROGRAM_PARAMETERS" value="-d fx -w 800 -h 600 -t matrix -f example/matrix/a.txt" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.github.cannor147.itmo.software.lab05.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
