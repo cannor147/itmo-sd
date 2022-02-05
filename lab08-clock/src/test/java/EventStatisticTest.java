@@ -1,6 +1,6 @@
-import com.github.cannor147.itmo.software.lab08.clock.MutableClock;
-import com.github.cannor147.itmo.software.lab08.event.EventsStatistic;
-import com.github.cannor147.itmo.software.lab08.event.EventsStatisticImpl;
+import com.github.cannor147.itmo.sd.lab08.clock.MutableClock;
+import com.github.cannor147.itmo.sd.lab08.event.EventsStatistic;
+import com.github.cannor147.itmo.sd.lab08.event.EventsStatisticImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package com.github.cannor147.itmo.tt.lab;
 
-import com.github.cannor147.itmo.software.lab07.profiler.Profiler;
+import com.github.cannor147.itmo.sd.lab07.profiler.Profiler;
 
 import java.io.IOException;
 

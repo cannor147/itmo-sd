@@ -8,7 +8,7 @@
         <version>2.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.cannor147.itmo.software</groupId>
+    <groupId>com.github.cannor147.itmo.sd</groupId>
     <artifactId>lab04-mvc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>lab04-mvc</name>

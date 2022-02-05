@@ -37,12 +37,12 @@
 </#macro>
 
 <#macro listLink taskList>
-<#-- @ftlvariable name="task" type="com.github.cannor147.itmo.software.lab04.model.TaskList" -->
+<#-- @ftlvariable name="task" type="com.github.cannor147.itmo.sd.lab04.model.TaskList" -->
     <a href="/task-list/${taskList.id}" class="list-link list-link-${taskList.id % 6}">${taskList.name}</a>
 </#macro>
 
 <#macro taskView task>
-<#-- @ftlvariable name="task" type="com.github.cannor147.itmo.software.lab04.dto.TaskDto" -->
+<#-- @ftlvariable name="task" type="com.github.cannor147.itmo.sd.lab04.dto.TaskDto" -->
     <a href="/task/${task.id}"><b>${task.name}</b></a>
     <#if task.taskList??>
         <@listLink taskList=task.taskList></@listLink>
@@ -63,7 +63,7 @@
 </#macro>
 
 <#macro boardView board createLink>
-<#-- @ftlvariable name="board" type="com.github.cannor147.itmo.software.lab04.dto.BoardDto" -->
+<#-- @ftlvariable name="board" type="com.github.cannor147.itmo.sd.lab04.dto.BoardDto" -->
     <div class="board">
         <div class="to-do column">
             <h3 class="column-name">To Do</h3>
