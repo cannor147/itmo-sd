@@ -4,18 +4,18 @@ import akka.actor.ActorRef
 import akka.actor.Props
 import akka.actor.ReceiveTimeout
 import akka.actor.UntypedAbstractActor
-import com.github.cannor147.itmo.sd.lab09.AggregatorProxy
+import com.github.cannor147.itmo.sd.lab09.config.AggregatorConfig
 import com.github.cannor147.itmo.sd.lab09.dto.*
 import java.util.Collections
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
 class AggregateActor(
-    private val aggregatorProxy: AggregatorProxy,
+    private val aggregatorConfig: AggregatorConfig,
 ) : UntypedAbstractActor() {
     private val aggregationSender: AtomicReference<ActorRef?> = AtomicReference()
     private var text: AtomicReference<String?> = AtomicReference()
-    private val maxAggregationCount = aggregatorProxy.maxSearchCount * SearchEngine.values().size
+    private val maxAggregationCount = aggregatorConfig.maxSearchCount * SearchEngine.values().size
     private var responses: MutableList<SearchResponse> = Collections.synchronizedList(ArrayList(maxAggregationCount))
     private val counter: AtomicInteger = AtomicInteger()
 
@@ -26,7 +26,7 @@ class AggregateActor(
             counter.set(SearchEngine.values().size)
 
             for (searchEngine in SearchEngine.values()) {
-                val childActorRef = context.actorOf(Props.create(SearchActor::class.java, aggregatorProxy))
+                val childActorRef = context.actorOf(Props.create(SearchActor::class.java, aggregatorConfig))
                 childActorRef.tell(SearchRequest(message.text, searchEngine), self())
             }
             context.receiveTimeout = message.timeout

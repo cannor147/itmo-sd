@@ -1,16 +1,16 @@
 package com.github.cannor147.itmo.sd.lab09.actor
 
 import akka.actor.UntypedAbstractActor
-import com.github.cannor147.itmo.sd.lab09.AggregatorProxy
+import com.github.cannor147.itmo.sd.lab09.config.AggregatorConfig
 import com.github.cannor147.itmo.sd.lab09.dto.SearchEngine
 import com.github.cannor147.itmo.sd.lab09.dto.SearchRequest
 import com.github.cannor147.itmo.sd.lab09.dto.SearchResponse
 
 class SearchActor(
-    private val aggregatorProxy: AggregatorProxy,
+    private val aggregatorConfig: AggregatorConfig,
 ) : UntypedAbstractActor() {
-    private val kinopoiskClient get() = aggregatorProxy.kinopoiskClient
-    private val imdbClient get() = aggregatorProxy.imdbClient
+    private val kinopoiskClient get() = aggregatorConfig.kinopoiskClient
+    private val imdbClient get() = aggregatorConfig.imdbClient
 
     override fun onReceive(message: Any?) {
         if (message is SearchRequest) {
