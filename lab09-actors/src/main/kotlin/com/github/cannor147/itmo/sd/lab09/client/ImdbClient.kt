@@ -40,15 +40,15 @@ data class SearchData(
     var searchType: SearchType,
     var expression: String,
     var results: List<SearchResult>,
-    var errorMessage: String,
+    var errorMessage: String? = null,
 )
 
 data class SearchResult(
     var id: String,
     var resultType: String,
-    var image: String,
+    var image: String?,
     var title: String,
-    var description: String,
+    var description: String?,
 )
 
 enum class SearchType {

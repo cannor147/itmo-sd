@@ -33,7 +33,7 @@ class AggregateActor(
         } else if (message is ReceiveTimeout) {
             finalize()
         } else if (message is List<*>) {
-            responses.addAll(message.map { it as SearchResponse })
+            responses.addAll(message.map { it as SearchResponse }.take(aggregatorConfig.maxSearchCount))
             if (counter.decrementAndGet() == 0) {
                 finalize()
             }
@@ -41,7 +41,7 @@ class AggregateActor(
     }
 
     private fun finalize() {
-        sender.tell(AggregationResponse(text.get()!!, responses), self())
+        aggregationSender.get()!!.tell(AggregationResponse(text.get()!!, responses), self())
         context.stop(self())
     }
 }
