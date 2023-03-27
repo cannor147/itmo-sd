@@ -13,4 +13,5 @@ data class MyDealDto(
     val seller: String?,
     val buyer: String?,
     val paid: LocalDateTime?,
+    val deleted: Boolean,
 ) : DealDto

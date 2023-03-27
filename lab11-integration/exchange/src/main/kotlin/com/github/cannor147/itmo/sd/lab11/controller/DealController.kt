@@ -21,7 +21,8 @@ class DealController(
     @GetMapping("/my")
     fun getMy(
         @RequestParam("login") login: String,
-    ) : ResponseEntity<List<MyDealDto>> = ResponseEntity.ok(dealService.getByLogin(login))
+        @RequestParam("deleted", required = false) includeDeleted: Boolean = false,
+    ) : ResponseEntity<List<MyDealDto>> = ResponseEntity.ok(dealService.getByLogin(login, includeDeleted))
 
     @PostMapping("/{id}/buy")
     fun buy(

@@ -16,7 +16,7 @@ class DealConverter {
 
     fun toMyDealDto(deal: Deal) = MyDealDto(
         id = deal.id,
-        created = deal.created!!,
+        created = deal.created,
         companyCode = deal.stock?.code!!,
         companyName = deal.stock?.company!!,
         amount = deal.amount!!,
@@ -25,11 +25,12 @@ class DealConverter {
         seller = deal.seller,
         buyer = deal.buyer,
         paid = deal.paid,
+        deleted = deal.deleted,
     )
 
     fun toOpenDealDto(deal: Deal) = OpenDealDto(
         id = deal.id,
-        created = deal.created!!,
+        created = deal.created,
         companyCode = deal.stock?.code!!,
         companyName = deal.stock?.company!!,
         amount = deal.amount!!,
@@ -40,7 +41,7 @@ class DealConverter {
 
     fun toClosedDealDto(deal: Deal) = ClosedDealDto(
         id = deal.id,
-        created = deal.created!!,
+        created = deal.created,
         companyCode = deal.stock?.code!!,
         companyName = deal.stock?.company!!,
         amount = deal.amount!!,

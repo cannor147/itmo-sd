@@ -19,12 +19,12 @@ class DealService(
     private val dealConverter: DealConverter,
 ) {
     @Transactional
-    fun get(id: String, login: String): DealDto = dealRepository.findByIdAndDeletedFalse(id)
+    fun get(id: String, login: String): DealDto = dealRepository.findAvailableByIdAndLogin(id, login)
         .let(dealConverter::require)
         .let { dealConverter.toDealDto(it, login) }
 
     @Transactional
-    fun getByLogin(login: String) = dealRepository.findAllMyByLogin(login)
+    fun getByLogin(login: String, includeDeleted: Boolean) = dealRepository.findAllMyByLogin(login, includeDeleted)
         .map(dealConverter::toMyDealDto)
 
     @Transactional
