@@ -19,7 +19,7 @@ class CompanyConverter(
         code = stock.code!!,
         name = stock.company!!,
         stockPrice = stock.price!!,
-        stockAmount = deals.sumOf { it.amount!! }
+        stockAmount = deals.filter { it.buyer == null && it.seller != null }.sumOf { it.amount!! }
     )
 
     fun toCompanyDto(
