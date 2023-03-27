@@ -1,4 +1,4 @@
-package com.github.cannor147.itmo.sd.bank.model
+package com.github.cannor147.itmo.sd.lab11.model
 
 import jakarta.persistence.*
 

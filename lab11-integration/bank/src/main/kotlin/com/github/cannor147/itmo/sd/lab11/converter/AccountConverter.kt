@@ -1,8 +1,8 @@
-package com.github.cannor147.itmo.sd.bank.converter
+package com.github.cannor147.itmo.sd.lab11.converter
 
-import com.github.cannor147.itmo.sd.bank.dto.AccountDto
-import com.github.cannor147.itmo.sd.bank.model.Account
-import com.github.cannor147.itmo.sd.bank.model.User
+import com.github.cannor147.itmo.sd.lab11.dto.AccountDto
+import com.github.cannor147.itmo.sd.lab11.model.Account
+import com.github.cannor147.itmo.sd.lab11.model.User
 import org.springframework.stereotype.Component
 
 @Component

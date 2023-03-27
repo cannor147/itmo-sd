@@ -1,4 +1,4 @@
-package com.github.cannor147.itmo.sd.bank
+package com.github.cannor147.itmo.sd.lab11
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

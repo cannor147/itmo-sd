@@ -1,11 +1,11 @@
-package com.github.cannor147.itmo.sd.bank.service
+package com.github.cannor147.itmo.sd.lab11.service
 
-import com.github.cannor147.itmo.sd.bank.converter.UserConverter
-import com.github.cannor147.itmo.sd.bank.dto.UserDto
-import com.github.cannor147.itmo.sd.bank.model.Account
-import com.github.cannor147.itmo.sd.bank.model.User
-import com.github.cannor147.itmo.sd.bank.repository.AccountRepository
-import com.github.cannor147.itmo.sd.bank.repository.UserRepository
+import com.github.cannor147.itmo.sd.lab11.converter.UserConverter
+import com.github.cannor147.itmo.sd.lab11.dto.UserDto
+import com.github.cannor147.itmo.sd.lab11.model.Account
+import com.github.cannor147.itmo.sd.lab11.model.User
+import com.github.cannor147.itmo.sd.lab11.repository.AccountRepository
+import com.github.cannor147.itmo.sd.lab11.repository.UserRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

@@ -1,7 +1,7 @@
-package com.github.cannor147.itmo.sd.bank.controller
+package com.github.cannor147.itmo.sd.lab11.controller
 
-import com.github.cannor147.itmo.sd.bank.service.AccountService
-import com.github.cannor147.itmo.sd.bank.service.UserService
+import com.github.cannor147.itmo.sd.lab11.service.AccountService
+import com.github.cannor147.itmo.sd.lab11.service.UserService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
