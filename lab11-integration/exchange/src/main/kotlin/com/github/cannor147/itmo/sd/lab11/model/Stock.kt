@@ -5,7 +5,7 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "stock", schema = "exchange")
+@Table(name = "stocks", schema = "exchange")
 data class Stock(
     @Id
     @Column(name = "id", nullable = false, unique = true)
