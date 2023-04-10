@@ -11,14 +11,14 @@ class UserController(
     private val userService: UserService
 ) {
     @PostMapping(value = ["/register"])
-    fun register(
+    suspend fun register(
         @RequestParam(name = "login") login: String,
         @RequestParam(name = "name") name: String,
         @RequestParam(name = "currency", required = false) currency: Currency = Currency.USD,
     ) = userService.register(login, name, currency).let { ResponseEntity.ok(it) }
 
     @PostMapping(value = ["/{id}"])
-    fun search(
+    suspend fun search(
         @PathVariable(name = "id") id: Long,
     ) = userService.findById(id).let { ResponseEntity.ok(it) }
 }

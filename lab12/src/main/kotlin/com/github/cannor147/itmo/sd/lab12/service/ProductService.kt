@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 interface ProductService {
-    fun create(
+    suspend fun create(
         name: String,
         category: String,
         image: String,
@@ -15,8 +15,8 @@ interface ProductService {
         currency: Currency?,
         ownerId: Long
     ): ProductDto
-    fun findByOwner(ownerId: Long): List<ProductDto>
-    fun findByCategory(category: String): List<ProductDto>
-    fun findById(id: Long): ProductDto
-    fun findByName(prefix: String): List<ProductDto>
+    suspend fun findByOwner(ownerId: Long): List<ProductDto>
+    suspend fun findByCategory(category: String): List<ProductDto>
+    suspend fun findById(id: Long): ProductDto
+    suspend fun findByName(prefix: String): List<ProductDto>
 }

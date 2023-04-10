@@ -15,7 +15,7 @@ class CurrencyController(
     private val currencyService: CurrencyService,
 ) {
     @PostMapping(value = ["/list"])
-    fun convert(
+    suspend fun convert(
         @RequestParam(name = "amount") fromAmount: Double,
         @RequestParam(name = "currency") fromCurrency: Currency,
         @RequestParam(name = "to") toCurrency: Currency,

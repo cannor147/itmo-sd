@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 interface UserService {
-    fun register(login: String, name: String, currency: Currency = Currency.USD): UserDto
-    fun findById(id: Long): UserDto
-    fun findByLogin(login: String): UserDto
+    suspend fun register(login: String, name: String, currency: Currency = Currency.USD): UserDto
+    suspend fun findById(id: Long): UserDto
+    suspend fun findByLogin(login: String): UserDto
 }

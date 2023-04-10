@@ -11,7 +11,7 @@ class ProductController(
     private val productService: ProductService,
 ) {
     @PostMapping(value = ["/create"])
-    fun create(
+    suspend fun create(
         @RequestParam(name = "name") name: String,
         @RequestParam(name = "category") category: String,
         @RequestParam(name = "image") image: String,
@@ -21,22 +21,22 @@ class ProductController(
     ) = productService.create(name, category, image, amount, currency, userId).let { ResponseEntity.ok(it) }
 
     @PostMapping(value = ["/list"])
-    fun list(
+    suspend fun list(
         @RequestParam(name = "category") category: String,
     ) = productService.findByCategory(category).let { ResponseEntity.ok(it) }
 
     @PostMapping(value = ["/my"])
-    fun list(
+    suspend fun list(
         @RequestParam(name = "user_id") userId: Long,
     ) = productService.findById(userId).let { ResponseEntity.ok(it) }
 
     @PostMapping(value = ["/search"])
-    fun search(
+    suspend fun search(
         @RequestParam(name = "pattern") pattern: String,
     ) = productService.findByName(pattern).let { ResponseEntity.ok(it) }
 
     @PostMapping(value = ["/{id}"])
-    fun search(
+    suspend fun search(
         @PathVariable(name = "id") id: Long,
     ) = productService.findById(id).let { ResponseEntity.ok(it) }
 }
